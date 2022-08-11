@@ -237,7 +237,7 @@ function evaluateInternal(expr: SupportedExpressions, context: EvaluationContext
   if (ts.isBinaryExpression(expr)) {
     if (expr.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) {
       const left = evaluateInternal(expr.left, context);
-      if (shouldShortCircuitEvaluation(left) && expr.right.kind !== ts.SyntaxKind.Identifier) {
+      if (shouldShortCircuitEvaluation(left) && expr.right.kind !== ts.SyntaxKind.Identifier || (expr.parent as any).expression.escapedText === 'styled') {
         return left;
       }
       if (!left) {
